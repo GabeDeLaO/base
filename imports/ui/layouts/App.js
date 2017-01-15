@@ -1,8 +1,10 @@
 import React from 'react';
 import { Grid } from 'react-bootstrap';
 import AppNavigation from '../containers/AppNavigation.js';
+//import { createContainer } from 'meteor/react-meteor-data';
+//import { PurchaseRequests } from '../../api/purchaseRequests/purchaseRequests.js';
 
-const App = ({ children }) => (
+export default App = ({ children }) => (
   <div>
     <AppNavigation />
     <Grid>
@@ -13,6 +15,11 @@ const App = ({ children }) => (
 
 App.propTypes = {
   children: React.PropTypes.node,
+  //purchases: React.PropTypes.array,
 };
 
-export default App;
+// export default createContainer(() => {
+// 	return{
+// 		purchases: PurchaseRequests.find({}).fetch(),
+// 	};
+// }, App);
