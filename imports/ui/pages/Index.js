@@ -1,7 +1,6 @@
 import React from 'react';
 import { Jumbotron, Table, Row, Col } from 'react-bootstrap';
 
-import { PurchaseRequests } from '../../api/purchaseRequests.js';
 
 const Index = () => (
   <div className="Index">
