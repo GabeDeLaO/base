@@ -1,10 +1,10 @@
-# The Meteor Chef - Base
-A starting point for Meteor apps.
+# Brett Bot
+A slack bot for adding requests to a queue for an accountant.
 
 <table>
   <tbody>
     <tr>
-      <th>Base Version</th>
+      <th>Running on MeteorChef Base Version</th>
       <td>v4.11.0</td>
     </tr>
     <tr>
@@ -14,4 +14,4 @@ A starting point for Meteor apps.
   </tbody>
 </table>
 
-[Read the Documentation](http://themeteorchef.com/base)
+[Read the Documentation - Link to original project](http://themeteorchef.com/base)
