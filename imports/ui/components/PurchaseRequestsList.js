@@ -16,8 +16,8 @@ export default class PurchaseRequestsList extends React.Component {
 
 	_complete(purchaseId) {
 		console.log('Complete', purchaseId);
-		let payload = JSON.stringify({ text: "Brett has placed your order. He will take a <bonus.ly> now. Thanks!" });
 		let purchaseOrder = PurchaseRequests.find({_id: purchaseId}).fetch();
+		let payload = JSON.stringify({ channel: purchaseOrder.user_name,  text: "Brett has placed your order. He will take a <bonus.ly> now. Thanks!" });
 		PurchaseRequests.update(
 			{ _id: purchaseId },
 			{
@@ -40,8 +40,8 @@ export default class PurchaseRequestsList extends React.Component {
 
 	_deny(purchaseId) {
 		console.log('Deny', purchaseId);
-		let payload = JSON.stringify({ text: "Brett has denied your request." });
 		let purchaseOrder = PurchaseRequests.find({_id: purchaseId}).fetch();
+		let payload = JSON.stringify({ channel: purchaseOrder.user_name, text: "Brett has denied your request." });
 		PurchaseRequests.update(
 			{ _id: purchaseId },
 			{
@@ -49,10 +49,12 @@ export default class PurchaseRequestsList extends React.Component {
 					isApproved: false,
 					isArchived: true
 				}
-			});
+		});
 		console.log('p o', purchaseOrder);
 		HTTP.call("POST", CosentialSlackWebHook,
-			{ content: payload },
+			{ 
+				content: payload 
+			},
 			function (error, result ){
 				if(error) {
 					console.log('Error', error);
@@ -80,9 +82,11 @@ export default class PurchaseRequestsList extends React.Component {
 										 Request ID: <code>{purchase._id}</code>
 									</Col>
 									<Col xs={5}>
-										<Button className="btn-white btn-sm pull-right">
-											<a href={purchase.link} target="blank"><Glyphicon glyph="link"/> Link</a>
-										</Button>
+										<a href={purchase.link} target="_blank">
+											<Button className="btn-white btn-sm pull-right">
+												<Glyphicon glyph="link"/> Link
+											</Button>
+										</a>
 										<Button onClick={()=> this._complete(purchase._id)} className="btn-white btn-sm pull-right">
 											<Glyphicon glyph="ok-sign"/> Complete
 										</Button>
