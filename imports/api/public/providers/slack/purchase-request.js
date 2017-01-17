@@ -18,8 +18,20 @@ const handler = (data, promise) => {
     };
     let purchaseId = PurchaseRequests.insert({ ...newRecord, createdAt: new Date() });
     console.log('purchase id: =>', purchaseId);
-    return `Brett bot has recieved your request for ${mongoData.text} Purchase Id#: \`${purchaseId}\` `;
-
+    let titleText = `*Brett-bot* has received your request for purchase. \`${purchaseId}\` `;
+    let resp = {
+        text: titleText,
+        attachments : [
+            {
+                text: "Please be patient, Brett will reach out to you."
+            },
+            {
+                text: purchaseObj.link
+            }
+        ]
+    };
+    //return `Brett-bot has recieved your request for Purchase Id#: \`${purchaseId}\` Reminder: DO NOT reach out to Brett, he will reach out to you.`;
+    return JSON.stringify(resp);
   } catch (exception) {
     module.reject(`[purchaseRequest.handler] ${exception}`);
   }

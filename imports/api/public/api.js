@@ -11,6 +11,7 @@ Picker.route('/api/webhooks/:provider', ({ provider }, request, response) => {
  	.then((result) => {
  		//console.log('result', result);
 		response.statusCode = 200;
+		response.setHeader('Content-Type', 'application/json');
 		response.end(result);
 	})
 	.catch((error) => {

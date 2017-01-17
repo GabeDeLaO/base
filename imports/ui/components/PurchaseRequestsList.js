@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Alert, Button, Row, Col, Glyphicon } from 'react-bootstrap';
+import { HTTP } from 'meteor/http';
 
 export default class PurchaseRequestsList extends React.Component {
 
@@ -11,10 +12,30 @@ export default class PurchaseRequestsList extends React.Component {
 
 	_complete(purchaseId) {
 		console.log('Complete', purchaseId);
+		let payload = JSON.stringify({ text: "Brett has placed your order. He will take a <bonus.ly> now. Thanks!" });
+		HTTP.call("POST", "https://hooks.slack.com/services/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",
+			{ content: payload },
+			function (error, result ){
+				if(error) {
+					console.log('Error', error);
+				}
+				console.log('Result', result);
+			}
+		);
 	}
 
 	_deny(purchaseId) {
 		console.log('Deny', purchaseId);
+		let payload = JSON.stringify({ text: "Brett has denied your request." });
+		HTTP.call("POST", "https://hooks.slack.com/services/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",
+			{ content: payload },
+			function (error, result ){
+				if(error) {
+					console.log('Error', error);
+				}
+				console.log('Result', result);
+			}
+		);
 	}
 
 	componentDidMount(){
@@ -38,10 +59,10 @@ export default class PurchaseRequestsList extends React.Component {
 										<Button className="btn-white btn-sm pull-right">
 											<a href={purchase.link} target="blank"><Glyphicon glyph="link"/> Link</a>
 										</Button>
-										<Button onClick={()=> this._deny(purchase._id)} className="btn-white btn-sm pull-right">
+										<Button onClick={()=> this._complete(purchase._id)} className="btn-white btn-sm pull-right">
 											<Glyphicon glyph="ok-sign"/> Complete
 										</Button>
-										<Button onClick={()=> this._complete(purchase._id)} className="btn-white btn-sm pull-right">
+										<Button onClick={()=> this._deny(purchase._id)} className="btn-white btn-sm pull-right">
 											<Glyphicon glyph="remove-sign"/> Deny
 										</Button>
 									</Col>
