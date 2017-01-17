@@ -26,7 +26,7 @@ const handler = (data, promise) => {
                 text: "Please be patient, Brett will reach out to you."
             },
             {
-                text: purchaseObj.link
+                text: purchaseObj.link + " : $" + purchaseObj.dollarAmount
             }
         ]
     };
