@@ -4,13 +4,12 @@ import { Mongo } from 'meteor/mongo';
 
 export const PurchaseRequests = new Mongo.Collection('purchaseRequests');
 
-/*
 PurchaseRequests.allow({
-  insert: () => false,
-  update: () => false,
-  remove: () => false,
+  insert: () => true,
+  update: () => true,
+  remove: () => true,
 });
-
+/*
 PurchaseRequests.deny({
   insert: () => true,
   update: () => true,

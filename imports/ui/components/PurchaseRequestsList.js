@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Alert, Button, Row, Col, Glyphicon } from 'react-bootstrap';
 import { HTTP } from 'meteor/http';
+import { PurchaseRequests } from '../../api/purchaseRequests/purchaseRequests.js';
+
+let CosentialSlackWebHook = 'https://hooks.slack.com/services/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';
+let slackWebhook = 'https://hooks.slack.com/services/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';
 
 export default class PurchaseRequestsList extends React.Component {
 
@@ -13,7 +17,17 @@ export default class PurchaseRequestsList extends React.Component {
 	_complete(purchaseId) {
 		console.log('Complete', purchaseId);
 		let payload = JSON.stringify({ text: "Brett has placed your order. He will take a <bonus.ly> now. Thanks!" });
-		HTTP.call("POST", "https://hooks.slack.com/services/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",
+		let purchaseOrder = PurchaseRequests.find({_id: purchaseId}).fetch();
+		PurchaseRequests.update(
+			{ _id: purchaseId },
+			{
+				$set: {
+					isApproved: true,
+					isArchived: true
+				}
+			});
+		console.log('p o', purchaseOrder);
+		HTTP.call("POST", CosentialSlackWebHook,
 			{ content: payload },
 			function (error, result ){
 				if(error) {
@@ -27,7 +41,17 @@ export default class PurchaseRequestsList extends React.Component {
 	_deny(purchaseId) {
 		console.log('Deny', purchaseId);
 		let payload = JSON.stringify({ text: "Brett has denied your request." });
-		HTTP.call("POST", "https://hooks.slack.com/services/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",
+		let purchaseOrder = PurchaseRequests.find({_id: purchaseId}).fetch();
+		PurchaseRequests.update(
+			{ _id: purchaseId },
+			{
+				$set: {
+					isApproved: false,
+					isArchived: true
+				}
+			});
+		console.log('p o', purchaseOrder);
+		HTTP.call("POST", CosentialSlackWebHook,
 			{ content: payload },
 			function (error, result ){
 				if(error) {

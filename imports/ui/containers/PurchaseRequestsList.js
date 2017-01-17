@@ -5,6 +5,6 @@ import Loading from '../components/Loading.js';
 
 export default createContainer(() => {
   return{
-    purchases: PurchaseRequests.find({}).fetch(),
+    purchases: PurchaseRequests.find({ isArchived: { $exists : false } }).fetch(),
   };
 }, PurchaseRequestsList);
