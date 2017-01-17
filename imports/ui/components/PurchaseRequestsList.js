@@ -5,6 +5,16 @@ export default class PurchaseRequestsList extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._deny = this._deny.bind(this);
+		this._complete = this._complete.bind(this);
+	}
+
+	_complete(purchaseId) {
+		console.log('Complete', purchaseId);
+	}
+
+	_deny(purchaseId) {
+		console.log('Deny', purchaseId);
 	}
 
 	componentDidMount(){
@@ -25,9 +35,15 @@ export default class PurchaseRequestsList extends React.Component {
 										 Request ID: <code>{purchase._id}</code>
 									</Col>
 									<Col xs={5}>
-										<Button className="btn-info btn-sm pull-right"><a href={purchase.link} target="blank">Link</a></Button>
-										<Button className="btn-white btn-sm pull-right">Complete</Button>
-										<Button className="btn-white btn-sm pull-right"><Glyphicon glyph="star" />Deny</Button>
+										<Button className="btn-white btn-sm pull-right">
+											<a href={purchase.link} target="blank"><Glyphicon glyph="link"/> Link</a>
+										</Button>
+										<Button onClick={()=> this._deny(purchase._id)} className="btn-white btn-sm pull-right">
+											<Glyphicon glyph="ok-sign"/> Complete
+										</Button>
+										<Button onClick={()=> this._complete(purchase._id)} className="btn-white btn-sm pull-right">
+											<Glyphicon glyph="remove-sign"/> Deny
+										</Button>
 									</Col>
 								</Row>
 							</ListGroupItem> 
